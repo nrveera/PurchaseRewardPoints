@@ -1,0 +1,6 @@
+D:\Interview\Reward.Data\bin\Debug\Reward.Data.dll
+D:\Interview\Reward.Data\bin\Debug\Reward.Data.pdb
+D:\Interview\Reward.Data\obj\Debug\Reward.Data.csproj.AssemblyReference.cache
+D:\Interview\Reward.Data\obj\Debug\Reward.Data.csproj.CoreCompileInputs.cache
+D:\Interview\Reward.Data\obj\Debug\Reward.Data.dll
+D:\Interview\Reward.Data\obj\Debug\Reward.Data.pdb
