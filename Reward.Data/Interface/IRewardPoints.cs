@@ -12,5 +12,7 @@ namespace Reward.Data.Interface
     public interface IRewardPoints
     {
         RewardPoints GetRewardPoints(float PurchaseAmount);
+        UserRewardPoints GetUserRewardDetails(UserDetails obj);
+        List<RewardPointsHistory> GetRewardHistory(UserDetails obj);
     }
 }

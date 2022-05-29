@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
 using Reward.Data.Model;
 using Reward.Data.Interface;
 namespace Reward.Data.Repository
@@ -14,6 +17,7 @@ namespace Reward.Data.Repository
     /// </summary>
     public class RewardPointsRepository:IRewardPoints
     {
+        MSQL cobj = new MSQL();
         /// <summary>
         /// This method calculate the reward points.
         /// <param name="PurchaseAmount">Amount in float value</param>
@@ -37,6 +41,63 @@ namespace Reward.Data.Repository
             }
             return reward;
         }
+
+        public UserRewardPoints GetUserRewardDetails(UserDetails obj)
+        {
+            SqlParameter[] paras = new SqlParameter[]
+            {
+                new SqlParameter("@ctype",obj.ctype),
+                new SqlParameter("@usermobile",obj.usermobile),
+                new SqlParameter("@purchaseamount",obj.purchaseamount),
+                
+            };
+            DataTable dt = cobj.GetDataTable("sp_userrewards", paras);
+            UserRewardPoints uobj = new UserRewardPoints();
+            if (dt.Rows.Count > 0)
+            {
+                uobj.usermobile =dt.Rows[0]["usermobile"].ToString();
+                uobj.totalpurchase= dt.Rows[0]["totalpurchase"].ToString();
+                uobj.totalrewards = dt.Rows[0]["totalrewards"].ToString();
+                uobj.expiredrewards = dt.Rows[0]["expiredrewards"].ToString();
+                uobj.activerewards = dt.Rows[0]["activerewards"].ToString();
+                uobj.currentreward = dt.Rows[0]["currentreward"].ToString();
+            }
+
+
+            return uobj;
+
+        }
+
+        public List<RewardPointsHistory> GetRewardHistory(UserDetails obj)
+        {
+            SqlParameter[] paras = new SqlParameter[]
+            {
+                new SqlParameter("@ctype",obj.ctype),
+                new SqlParameter("@usermobile",obj.usermobile),
+                new SqlParameter("@purchaseamount",obj.purchaseamount),
+
+            };
+            DataTable dt = cobj.GetDataTable("sp_userrewards", paras);
+            List<RewardPointsHistory> lobj = new List<RewardPointsHistory>();
+            
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow row in dt.Rows)
+                {
+                    RewardPointsHistory uobj = new RewardPointsHistory();
+                    uobj.usermobile = row["usermobile"].ToString();
+                    uobj.purchaseamount = row["purchaseamount"].ToString();
+                    uobj.rewardpoint = row["rewardpoint"].ToString();
+                    uobj.expirydate = row["expirydate"].ToString();
+                    uobj.createddate = row["createddate"].ToString();
+                    lobj.Add(uobj);
+                }
+            }
+            return lobj;
+        }
+
+
+
         /// <summary>
         /// This method write the log file.
         /// <param name="clearText">string to write in log file</param>

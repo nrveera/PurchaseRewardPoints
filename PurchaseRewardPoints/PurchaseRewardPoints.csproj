@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	<SkipFunctionsDepsCopy>true</SkipFunctionsDepsCopy>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +16,8 @@
   <ItemGroup>
     <Folder Include="Files\" />
   </ItemGroup>
+<ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+</ItemGroup>
 
 </Project>

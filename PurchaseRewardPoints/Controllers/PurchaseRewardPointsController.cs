@@ -21,9 +21,41 @@ namespace PurchaseRewardPoints.Controllers
         /// </returns>
         /// </summary>
         [HttpGet]
+        [Route("api/[controller]/GetRewardPointsByAmount")]
         public ActionResult<RewardPoints> GetRewardPointsByAmount(float PurchaseAmount)
         {
             return rpoints.GetRewardPoints(PurchaseAmount);
         }
+        [HttpGet]
+        [Route("api/[controller]/AddUserRewardDetails")]
+        public ActionResult<UserRewardPoints> AddUserRewardDetails(string MobileNo, string PurchaseAmount)
+        {
+            UserDetails cobj = new UserDetails();
+            cobj.ctype = "addpurchase";
+            cobj.usermobile = MobileNo;
+            cobj.purchaseamount = PurchaseAmount;
+           // UserRewardPoints aa = rpoints.GetUserRewardDetails(cobj);
+           return rpoints.GetUserRewardDetails(cobj);
+        }
+        [HttpGet]
+        [Route("api/[controller]/GetUserRewardDetails")]
+        public ActionResult<UserRewardPoints> GetUserRewardDetails(string MobileNo)
+        {
+            UserDetails cobj = new UserDetails();
+            cobj.ctype = "getbymobile";
+            cobj.usermobile = MobileNo;
+            return rpoints.GetUserRewardDetails(cobj); ;
+        }
+        [HttpGet]
+        [Route("api/[controller]/GetRewardPointsHistory")]
+        public ActionResult<List<RewardPointsHistory>> GetRewardPointsHistory(string MobileNo)
+        {
+            UserDetails cobj = new UserDetails();
+            cobj.ctype = "gethistorybymobile";
+            cobj.usermobile = MobileNo;
+            return rpoints.GetRewardHistory(cobj); ;
+        }
+
+
     }
 }
